@@ -10,17 +10,8 @@ export interface Step {
     highlightedRows?: number[];
     operation?: string;
 }
-
-export type OperationType = 
-    | 'gaussian-elimination'
-    | 'gauss-jordan'
-    | 'determinant'
-    | 'inverse'
-    | 'rref';
-
 export interface SolutionResult {
-    finalMatrix: number[][];
+    finalMatrix?: number[][];
     solution?: number[];
-    determinant?: number;
-    rank?: number;
+    error?: string;
 }

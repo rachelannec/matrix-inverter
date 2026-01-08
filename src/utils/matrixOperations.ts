@@ -324,12 +324,11 @@ export const gaussJordan = (inputMatrix: number[][]): { steps: Step[], result: S
  * @param inputMatrix - square matrix to invert
  * @returns 
  */
-
 export const calculateInverse = (inputMatrix: number[][]): { steps: Step[], result: SolutionResult } => {
     const steps: Step[] = [];
     const n = inputMatrix.length;
     
-    // ----- Validation: must be sqare matrix
+    // ----- Validation: must be square matrix
     if (n !== inputMatrix[0].length) {
         steps.push({
             description: '❌ Error: Only square matrices have inverses',
@@ -337,7 +336,10 @@ export const calculateInverse = (inputMatrix: number[][]): { steps: Step[], resu
         });
         return {
             steps,
-            result: { finalMatrix: inputMatrix }
+            result: { 
+                finalMatrix: inputMatrix,
+                error: 'Not a square matrix'
+            }
         };
     }
 
@@ -346,7 +348,7 @@ export const calculateInverse = (inputMatrix: number[][]): { steps: Step[], resu
     // right side: identity matrix I (1s on diagonal)
     const augmented: number[][] = inputMatrix.map((row, i) => [
         ...row, // copy of original row
-        ...Array(n).fill(0).map((_, j) => (i === j ? 1 : 0)) // addthe identity row
+        ...Array(n).fill(0).map((_, j) => (i === j ? 1 : 0)) // add the identity row
     ]);
     // result: 2n columns (from A and I)
 
@@ -363,31 +365,46 @@ export const calculateInverse = (inputMatrix: number[][]): { steps: Step[], resu
     // it will reduce the left side (A) to identity form
     // also, the right side (I) becomes the inverse
     const result = gaussJordan(augmented);
+
+    // Check if gaussJordan returned a valid matrix
+    if (!result.result.finalMatrix) {
+        steps.push(...result.steps);
+        return {
+            steps,
+            result: {
+                error: 'Failed to process matrix'
+            }
+        };
+    }
     
-    // ----- Step 3: Extract inverse from right sid
+    // ----- Step 3: Extract inverse from right side
     // after gauss-jordan, columns n to 2n-1 contain A^-1
     const inverse = result.result.finalMatrix.map(row => row.slice(n));
     
     // ----- Verification: Check if we got identity on left side
-    // id not, matrix is singular (non-invertible)
+    // if not, matrix is singular (non-invertible)
     const isIdentity = result.result.finalMatrix.every((row, i) => 
         row.slice(0, n).every((val, j) => 
-            // check: diagonla should be 1, off-diagonal should be 0
+            // check: diagonal should be 1, off-diagonal should be 0
             Math.abs(val - (i === j ? 1 : 0)) < 1e-10)
     );
 
     if (!isIdentity) {
-        // matrix reduction failed? -> matrix is singular
+        // matrix reduction failed -> matrix is singular
         steps.push(...result.steps);
         steps.push({
-            description: '❌ Matrix is NOT INVERTIBLE (Singular Matrix)\n' +
-                        'The left side could not be reduced to the identity matrix.\n' +
-                        'This means $\\det(A) = 0$ and no inverse exists.',
+            description: '❌ **THE MATRIX IS SINGULAR**\n\n' +
+                        'The matrix is NOT INVERTIBLE because:\n' +
+                        '- The left side could not be reduced to the identity matrix\n' +
+                        '- This means $\\det(A) = 0$\n' +
+                        '- No inverse exists for this matrix',
             matrix: result.result.finalMatrix
         });
         return {
             steps,
-            result: { finalMatrix: result.result.finalMatrix }
+            result: { 
+                error: 'The matrix is singular'
+            }
         };
     }
 
