@@ -14,7 +14,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentTab, onTabChange }) => {
             <div className="navbar-container">
                 <div className="navbar-brand">
                     <span className="brand-icon"> <img src="icon.png" alt="Icon" /> </span>
-                    <span className="brand-name">Matrix Solver</span>
+                    <span className="brand-name">Automated Matrix Inverter</span>
                 </div>
 
                 <button 
