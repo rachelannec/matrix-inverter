@@ -9,21 +9,23 @@ interface StepVisualizationProps {
 
 const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
     const [currentStep, setCurrentStep] = useState<number>(0);
+    const [useLatex, setUseLatex] = useState<boolean>(true);
 
-    // Helper function to parse description and render LaTeX inline
-    const renderDescription = (description: string) => {
+    // Helper to render LaTeX or plain description
+    const renderDescription = (description?: string) => {
         if (!description || description.trim() === '') {
             return <div style={{ fontStyle: 'italic', color: '#222' }}>No description available</div>;
         }
+        if (!useLatex) {
+            return <div style={{ whiteSpace: 'pre-line' }}>{description}</div>;
+        }
 
-        // Split by LaTeX delimiters $...$ for inline math
         const parts = description.split(/(\$[^$]+\$)/g);
-        
+
         return (
             <div style={{ whiteSpace: 'pre-line' }}>
                 {parts.map((part, index) => {
                     if (part.startsWith('$') && part.endsWith('$')) {
-                        // Extract LaTeX content (remove the $ delimiters)
                         const latex = part.slice(1, -1);
                         return (
                             <span key={index} style={{ display: 'inline-block', margin: '0 4px', verticalAlign: 'middle' }}>
@@ -37,16 +39,21 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
         );
     };
 
-    const renderMatrix = (matrix: number[][], highlightedRows?: number[]) => {
+    // Render matrix with scrollable container & flexible cells
+    const renderMatrix = (matrix?: number[][], highlightedRows?: number[]) => {
+        if (!matrix) return <div>No matrix to display</div>;
+
         return (
             <div style={{ 
-                display: 'inline-block', 
+                display: 'inline-block',
                 border: '2px solid #333',
                 borderRadius: '5px',
                 padding: '10px',
-                margin: '10px 0'
+                margin: '10px 0',
+                overflowX: 'auto',       // scroll if too wide
+                maxWidth: '100%'          // fit container
             }}>
-                <table style={{ borderCollapse: 'collapse' }}>
+                <table style={{ borderCollapse: 'collapse', width: 'max-content' }}>
                     <tbody>
                         {matrix.map((row, rowIndex) => (
                             <tr 
@@ -64,7 +71,7 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
                                         style={{
                                             padding: '10px 15px',
                                             textAlign: 'center',
-                                            minWidth: '70px',
+                                            minWidth: '40px',   // flexible for large matrices
                                             fontFamily: 'monospace',
                                             fontSize: '16px',
                                             fontWeight: highlightedRows?.includes(rowIndex) ? 'bold' : 'normal'
@@ -81,15 +88,27 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
         );
     };
 
-    // Safety check - return null if no steps or invalid currentStep
-    if (steps.length === 0 || !steps[currentStep]) {
-        return null;
-    }
+    // Safety: always render container even if steps are missing
+    const step = steps[currentStep] || { description: '', matrix: [] };
 
     return (
         <div className="step-visualization">
             <h2>Solution Steps</h2>
             
+            {/* LaTeX toggle */}
+            <div style={{ marginBottom: '20px' }}>
+                <label style={{ marginRight: '20px', cursor: 'pointer', color: '#eee' }}>
+                    <input 
+                        type="checkbox" 
+                        checked={useLatex}
+                        onChange={(e) => setUseLatex(e.target.checked)}
+                        style={{ cursor: 'pointer' }}
+                    />
+                    {' '}Use LaTeX Rendering
+                </label>
+            </div>
+            
+            {/* Navigation */}
             <div style={{ marginBottom: '20px' }}>
                 <button 
                     onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
@@ -106,7 +125,7 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
                     fontWeight: 'bold',
                     color: '#eee'
                 }}>
-                    Step {currentStep + 1} of {steps.length}
+                    Step {currentStep + 1} of {steps.length || 1}
                 </span>
                 
                 <button 
@@ -118,6 +137,7 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
                 </button>
             </div>
 
+            {/* Step display */}
             <div style={{ 
                 backgroundColor: '#f5f5f5',
                 border: '2px solid #ddd',
@@ -129,18 +149,13 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
                 <h3 style={{ color: '#cda95cff', marginBottom: '15px' }}>
                     Step {currentStep + 1}
                 </h3>
-                <div style={{ 
-                    fontSize: '16px', 
-                    marginBottom: '20px',
-                    color: '#333',
-                    lineHeight: '1.8',
-                    minHeight: '40px'
-                }}>
-                    {renderDescription(steps[currentStep].description)}
+                <div style={{ fontSize: '16px', marginBottom: '20px', color: '#333', lineHeight: '1.8', minHeight: '40px' }}>
+                    {renderDescription(step.description)}
                 </div>
-                {renderMatrix(steps[currentStep].matrix, steps[currentStep].highlightedRows)}
+                {renderMatrix(step.matrix, step.highlightedRows)}
             </div>
 
+            {/* All steps list */}
             <div style={{ marginTop: '25px' }}>
                 <h4 style={{ marginBottom: '10px', color: '#eee'}}>All Steps:</h4>
                 <ol style={{ 
@@ -152,14 +167,10 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
                     borderRadius: '5px',
                     border: '1px solid #e0e0e0'
                 }}>
-                    {steps.map((step, index) => {
-                        // Get first line of description, removing LaTeX
-                        const preview = step.description
-                            .replace(/\$[^$]+\$/g, '')
+                    {steps.map((s, index) => {
+                        const preview = s.description?.replace(/\$[^$]+\$/g, '')
                             .split('\n')
-                            .filter(line => line.trim() !== '')
-                            [0] || 'Step ' + (index + 1);
-
+                            .filter(line => line.trim() !== '')[0] || 'Step ' + (index + 1);
                         return (
                             <li 
                                 key={index}
@@ -174,14 +185,10 @@ const StepVisualization: React.FC<StepVisualizationProps> = ({ steps }) => {
                                     borderLeft: index === currentStep ? '3px solid #667eea' : '3px solid transparent'
                                 }}
                                 onMouseEnter={(e) => {
-                                    if (index !== currentStep) {
-                                        e.currentTarget.style.backgroundColor = '#f5f5f5';
-                                    }
+                                    if (index !== currentStep) e.currentTarget.style.backgroundColor = '#f5f5f5';
                                 }}
                                 onMouseLeave={(e) => {
-                                    if (index !== currentStep) {
-                                        e.currentTarget.style.backgroundColor = 'transparent';
-                                    }
+                                    if (index !== currentStep) e.currentTarget.style.backgroundColor = 'transparent';
                                 }}
                             >
                                 {preview}
