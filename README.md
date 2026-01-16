@@ -1,4 +1,4 @@
-# Matrix Solver
+# Automated Matrix Inverter
 
 <div align="center">
 
@@ -22,8 +22,7 @@
 - [About](#about)
 - [Features](#features)
 - [Demo](#demo)
-- [Getting Started](#getting-started)
-- [Prerequisites](#prerequisites)
+  <!-- - [Getting Started](#getting-started) - [Prerequisites](#prerequisites) -->
 - [Installation](#installation)
 - [Running the App](#running-the-app)
 - [Usage](#usage)
@@ -93,7 +92,7 @@ Input 2x2 matrix:
 Output:
 Error! The matrix is singular and has no inverse.
 This matrix has no inverse because its determinant is zero.
-
+```
 
 ## Getting Started
 
