@@ -45,9 +45,6 @@
     - [Mathematics](#mathematics)
     - [Development Tools](#development-tools)
   - [Project Structure](#project-structure)
-  - [Contributing](#contributing)
-    - [How to Contribute](#how-to-contribute)
-    - [Contribution Ideas](#contribution-ideas)
   - [License](#license)
   - [Acknowledgments](#acknowledgments)
 
@@ -267,16 +264,12 @@ matrix-inverter/
 ├── src/
 │   ├── assets/
 │   ├── components/
-│   │   ├── ExplanationTab.tsx
-│   │   ├── Footer.tsx
 │   │   ├── LaTeXRenderer.tsx
 │   │   ├── MatrixInput.tsx
 │   │   ├── Navbar.tsx
 │   │   ├── SolutionDisplay.tsx
 │   │   └── StepVisualization.tsx
 │   ├── styles/
-│   │   ├── ExplanationTab.css
-│   │   ├── Footer.css
 │   │   └── Navbar.css
 │   ├── types/
 │   │   ├── mathjax.d.ts
@@ -295,39 +288,9 @@ matrix-inverter/
 ├── tsconfig.json
 ├── vite.config.ts
 ├── CHANGELOG.md
+├── TestCASES.md
 └── README.md
 ```
-
----
-
-## Contributing
-
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-### How to Contribute
-
-1. **Fork the Project**
-2. **Create your Feature Branch**
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-3. **Commit your Changes**
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-4. **Push to the Branch**
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-5. **Open a Pull Request**
-
-### Contribution Ideas
-
-- Bug fixes
-- New matrix operations (Gram-Schmidt Process, etc.)
-- UI/UX improvements
-- Documentation enhancements
-- Better algorithm for existing operations
 
 ---
 
@@ -347,5 +310,6 @@ Distributed under the **MIT License**. See `LICENSE` file for more information.
 ---
 
 <div align="center">
-   Final Requirement for MATH 206 👾
+   Final Requirement for MATH 206 👾 <br>
+   Group 1 - BSCS 2-5
 </div>
