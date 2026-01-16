@@ -19,19 +19,36 @@
 
 ## Table of Contents
 
-- [About](#about)
-- [Features](#features)
-- [Demo](#demo)
-  <!-- - [Getting Started](#getting-started) - [Prerequisites](#prerequisites) -->
-- [Installation](#installation)
-- [Running the App](#running-the-app)
-- [Usage](#usage)
-- [Operations](#operations)
-- [Technologies Used](#technologies-used)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Automated Matrix Inverter](#automated-matrix-inverter)
+  - [Table of Contents](#table-of-contents)
+  - [About](#about)
+    - [Why Matrix Inverter?](#why-matrix-inverter)
+  - [Features](#features)
+    - [Core Operation](#core-operation)
+    - [User Experience](#user-experience)
+    - [Additional Features](#additional-features)
+  - [Demo](#demo)
+    - [Matrix Inversion Example](#matrix-inversion-example)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Running the App](#running-the-app)
+  - [Usage](#usage)
+    - [Basic Workflow](#basic-workflow)
+    - [Example:](#example)
+  - [Operations](#operations)
+    - [Matrix Inverse](#matrix-inverse)
+  - [Technologies Used](#technologies-used)
+    - [Frontend Framework](#frontend-framework)
+    - [Styling](#styling)
+    - [Mathematics](#mathematics)
+    - [Development Tools](#development-tools)
+  - [Project Structure](#project-structure)
+  - [Contributing](#contributing)
+    - [How to Contribute](#how-to-contribute)
+    - [Contribution Ideas](#contribution-ideas)
+  - [License](#license)
+  - [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -92,6 +109,7 @@ Input 2x2 matrix:
 Output:
 Error! The matrix is singular and has no inverse.
 This matrix has no inverse because its determinant is zero.
+Note: Step-by-step visualization is only shown for invertible matrices.
 ```
 
 ## Getting Started
@@ -114,8 +132,8 @@ npm --version
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/rachelannec/matrix-solver.git
-cd matrix-solver
+git clone https://github.com/rachelannec/matrix-inverter.git
+cd matrix-inverter
 ```
 
 2. **Install dependencies**
@@ -210,6 +228,8 @@ Finds the inverse matrix A⁻¹ using Gauss-Jordan elimination.
 - Matrix must be square
 - Determinant must be non-zero
 
+**Note:** If the matrix is singular (determinant = 0), an error message will be displayed and no steps will be shown.
+
 ---
 
 ## Technologies Used
@@ -237,36 +257,35 @@ Finds the inverse matrix A⁻¹ using Gauss-Jordan elimination.
 ## Project Structure
 
 ```
-matrix-solver/
+matrix-inverter/
 ├── public/
-│   ├── developing.gif
-│   └── icon.png
+│   └── testcases/
 ├── src/
+│   ├── assets/
 │   ├── components/
-│   │   ├── MatrixInput.tsx
-│   │   ├── StepVisualization.tsx
-│   │   ├── SolutionDisplay.tsx
-│   │   ├── OperationSelector.tsx
-│   │   ├── LaTeXRenderer.tsx
-│   │   ├── Navbar.tsx
+│   │   ├── ExplanationTab.tsx
 │   │   ├── Footer.tsx
-│   │   └── ExplanationTab.tsx
-│   ├── utils/
-│   │   ├── matrixOperations.ts    # Core algorithms
-│   │   ├── stepGenerator.ts       # Step generation logic
-│   │   ├── mathFormatter.ts       # Number formatting
-│   │   └── matrixValidator.ts     # Input validation
-│   ├── types/
-│   │   ├── matrix.ts              # TypeScript interfaces
-│   │   └── mathjax.d.ts          # MathJax type declarations
+│   │   ├── LaTeXRenderer.tsx
+│   │   ├── MatrixInput.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── SolutionDisplay.tsx
+│   │   └── StepVisualization.tsx
 │   ├── styles/
-│   │   ├── App.css
-│   │   ├── Navbar.css
+│   │   ├── ExplanationTab.css
 │   │   ├── Footer.css
-│   │   └── ExplanationTab.css
-│   ├── App.tsx                    # Main app component
-│   ├── main.tsx                   # Entry point
-│   └── vite-env.d.ts
+│   │   └── Navbar.css
+│   ├── types/
+│   │   ├── mathjax.d.ts
+│   │   └── matrix.ts
+│   ├── utils/
+│   │   ├── mathFormatter.ts
+│   │   ├── matrixOperations.ts
+│   │   ├── matrixValidator.ts
+│   │   └── stepGenerator.ts
+│   ├── App.css
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
 ├── index.html
 ├── package.json
 ├── tsconfig.json
@@ -324,5 +343,5 @@ Distributed under the **MIT License**. See `LICENSE` file for more information.
 ---
 
 <div align="center">
-
+   Final Requirement for MATH 206 👾
 </div>
