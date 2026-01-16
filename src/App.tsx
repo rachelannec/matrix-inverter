@@ -1,11 +1,8 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar';
-// import Footer from './components/Footer';
 import MatrixInput from './components/MatrixInput';
 import StepVisualization from './components/StepVisualization';
 import SolutionDisplay from './components/SolutionDisplay';
-
-// import ExplanationTab from './components/ExplanationTab';
 import { validateMatrix, isSquareMatrix } from './utils/matrixValidator';
 import { calculateInverse } from './utils/matrixOperations';
 import type { Step, SolutionResult } from './types/matrix';
