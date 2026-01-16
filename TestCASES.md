@@ -5,10 +5,10 @@ This document contains various test cases to verify the functionality of the Mat
 ## Table of Contents
 - [How to Use This Document](#how-to-use-this-document)
 - [Basic Test Cases](#basic-test-cases)
-- [Edge Cases](#edge-cases)
+<!-- - [Edge Cases](#edge-cases) -->
 - [Singular Matrices (Non-Invertible)](#singular-matrices-non-invertible)
-- [Special Matrices](#special-matrices)
-- [Large Matrices](#large-matrices)
+<!-- - [Special Matrices](#special-matrices)
+- [Large Matrices](#large-matrices) -->
 
 ---
 
@@ -85,8 +85,8 @@ or in decimal form:
 ```
 
 **Reference Calculator Screenshot:**
-![Test Case 3 - Input](testcases/tc3-input.png)
-![Test Case 3 - Output](testcases/tc3-output.png)
+![Test Case 3 - Input](public/testcases/tc3-input.png)
+![Test Case 3 - Output](public/testcases/tc3-output.png)
 
 **Expected Inverse:**
 ```
@@ -99,141 +99,9 @@ or in decimal form:
 
 ---
 
-### Test Case 4: 3×3 Matrix with Negative Values
-
-**Input Matrix:**
-```
-[  2  -1   0 ]
-[ -1   2  -1 ]
-[  0  -1   2 ]
-```
-
-**Reference Calculator Screenshot:**
-![Test Case 4 - Input](testcases/tc4-input.png)
-![Test Case 4 - Output](testcases/tc4-output.png)
-
-**Expected Inverse:**
-```
-[ 3/4   1/2   1/4 ]
-[ 1/2    1    1/2 ]
-[ 1/4   1/2   3/4 ]
-```
-or in decimal form:
-```
-[ 0.75  0.5   0.25 ]
-[ 0.5   1     0.5  ]
-[ 0.25  0.5   0.75 ]
-```
-
-**Description:** Tridiagonal matrix with negative values. Common in numerical analysis.
-
----
-
-### Test Case 5: 4×4 Matrix
-
-**Input Matrix:**
-```
-[ 1   0   2   0 ]
-[ 0   1   0   2 ]
-[ 0   0   1   0 ]
-[ 0   0   0   1 ]
-```
-
-**Reference Calculator Screenshot:**
-![Test Case 5 - Input](testcases/tc5-input.png)
-![Test Case 5 - Output](testcases/tc5-output.png)
-
-**Expected Inverse:**
-```
-[ 1   0  -2   0 ]
-[ 0   1   0  -2 ]
-[ 0   0   1   0 ]
-[ 0   0   0   1 ]
-```
-
-**Description:** 4×4 upper triangular-like matrix. Tests larger matrix handling.
-
----
-
-## Edge Cases
-
-### Test Case 6: Matrix with Very Small Values
-
-**Input Matrix:**
-```
-[ 0.0001  0.0002 ]
-[ 0.0003  0.0004 ]
-```
-
-**Reference Calculator Screenshot:**
-![Test Case 6 - Input](testcases/tc6-input.png)
-![Test Case 6 - Output](testcases/tc6-output.png)
-
-**Expected Inverse:**
-```
-[ -2    1 ]
-[  1.5 -0.5 ]
-```
-
-**Description:** Tests numerical precision with very small numbers.
-
----
-
-### Test Case 7: Matrix with Large Values
-
-**Input Matrix:**
-```
-[ 1000   2000 ]
-[ 3000   4000 ]
-```
-
-**Reference Calculator Screenshot:**
-![Test Case 7 - Input](testcases/tc7-input.png)
-![Test Case 7 - Output](testcases/tc7-output.png)
-
-**Expected Inverse:**
-```
-[ -0.002   0.001  ]
-[  0.0015 -0.0005 ]
-```
-
-**Description:** Tests handling of large numbers and precision.
-
----
-
-### Test Case 8: Diagonal Matrix
-
-**Input Matrix:**
-```
-[ 5   0   0 ]
-[ 0   3   0 ]
-[ 0   0   2 ]
-```
-
-**Reference Calculator Screenshot:**
-![Test Case 8 - Input](testcases/tc8-input.png)
-![Test Case 8 - Output](testcases/tc8-output.png)
-
-**Expected Inverse:**
-```
-[ 1/5     0      0   ]
-[  0     1/3     0   ]
-[  0      0     1/2  ]
-```
-or in decimal form:
-```
-[ 0.2       0       0   ]
-[ 0       0.333     0   ]
-[ 0         0      0.5  ]
-```
-
-**Description:** Pure diagonal matrix - inverse is reciprocals on diagonal.
-
----
-
 ## Singular Matrices (Non-Invertible)
 
-### Test Case 9: Zero Determinant - Duplicate Rows
+### Test Case 4: Zero Determinant - Duplicate Rows
 
 **Input Matrix:**
 ```
@@ -243,13 +111,14 @@ or in decimal form:
 ```
 
 **Reference Calculator Screenshot:**
-![Test Case 9 - Input](testcases/tc9-input.png)
-![Test Case 9 - Error](testcases/tc9-error.png)
+![Test Case 4 - Input](public/testcases/tc4-input.png)
+![Test Case 4 - Error](public/testcases/tc4-error.png)
 
 **Expected Result:** Error message - "The matrix is singular (non-invertible)" or "Determinant is zero"
 
 **Description:** Matrix with duplicate rows has determinant = 0. Should be caught during elimination.
 
+<!-- 
 ---
 
 ### Test Case 10: Zero Determinant - Proportional Rows
@@ -287,50 +156,6 @@ or in decimal form:
 
 **Description:** Matrix with a zero row cannot be inverted.
 
----
-
-### Test Case 12: Linear Dependent Columns
-
-**Input Matrix:**
-```
-[ 1   2   3 ]
-[ 2   4   6 ]
-[ 3   6   9 ]
-```
-
-**Reference Calculator Screenshot:**
-![Test Case 12 - Input](testcases/tc12-input.png)
-![Test Case 12 - Error](testcases/tc12-error.png)
-
-**Expected Result:** Error - "The matrix is singular (non-invertible)"
-
-**Description:** All rows are multiples of each other. Complete linear dependence.
-
----
-
-## Special Matrices
-
-### Test Case 13: Permutation Matrix
-
-**Input Matrix:**
-```
-[ 0   1   0 ]
-[ 0   0   1 ]
-[ 1   0   0 ]
-```
-
-**Reference Calculator Screenshot:**
-![Test Case 13 - Input](testcases/tc13-input.png)
-![Test Case 13 - Output](testcases/tc13-output.png)
-
-**Expected Inverse:**
-```
-[ 0   0   1 ]
-[ 1   0   0 ]
-[ 0   1   0 ]
-```
-
-**Description:** Permutation matrix - transpose equals inverse.
 
 ---
 
@@ -394,31 +219,11 @@ or in decimal form:
 
 **Expected Result:** Should produce valid inverse (verify A × A⁻¹ = I)
 
-**Description:** Tests performance and accuracy with larger matrix.
+**Description:** Tests performance and accuracy with larger matrix. -->
 
 ---
 
-### Test Case 17: 10×10 Identity Matrix
 
-**Input Matrix:** 10×10 identity matrix (1s on diagonal, 0s elsewhere)
-
-**Reference Calculator Screenshot:**
-![Test Case 17 - Input](testcases/tc17-input.png)
-![Test Case 17 - Output](testcases/tc17-output.png)
-
-**Expected Result:** Should return itself
-
-**Description:** Maximum size test with simplest case.
-
----
-
-## Screenshot Naming Convention
-
-Screenshots should be saved in the `testcases/` folder with the following naming:
-- `tc[number]-input.png` - Screenshot showing the input matrix
-- `tc[number]-output.png` - Screenshot showing the calculated inverse
-- `tc[number]-error.png` - Screenshot showing error message (for singular matrices)
-- `tc[number]-steps.png` - (Optional) Screenshot showing step-by-step process
 
 **Example:**
 ```
@@ -448,6 +253,7 @@ testcases/
 
 ## Recommended Reference Calculators
 
+- [eMathHelp Math Solver](https://www.emathhelp.net/calculators/linear-algebra/inverse-of-matrix-calculator) -- __Currently Used__
 - [Symbolab Matrix Calculator](https://www.symbolab.com/solver/matrix-calculator)
 - [WolframAlpha](https://www.wolframalpha.com/)
 - [Matrix Calculator](https://matrixcalc.org/)
