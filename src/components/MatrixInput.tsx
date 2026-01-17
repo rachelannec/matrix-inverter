@@ -89,50 +89,52 @@ const MatrixInput: React.FC<MatrixInputProps> = ({ onMatrixInput }) => {
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div
-                    style={{
-                        display: 'grid',
-                        gridTemplateColumns: `repeat(${size}, 70px)`,
-                        gap: '5px',
-                        marginBottom: '20px',
-                        justifyContent: 'center'
-                    }}
-                >
-                    {matrixValues.map((row, rowIndex) =>
-                        row.map((value, colIndex) => (
-                            <input
-                                key={`${rowIndex}-${colIndex}`}
-                                type="text"
-                                value={value}
-                                placeholder={
-                                    focusedCell?.row === rowIndex &&
-                                    focusedCell?.col === colIndex
-                                        ? ''
-                                        : '0'
-                                }
-                                onFocus={() =>
-                                    setFocusedCell({ row: rowIndex, col: colIndex })
-                                }
-                                onBlur={() => {
-                                    setFocusedCell(null);
-                                    if (matrixValues[rowIndex][colIndex].trim() === '') {
-                                        handleCellChange(rowIndex, colIndex, '');
+                <div className="matrix-input-wrapper">
+                    <div
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: `repeat(${size}, 70px)`,
+                            gap: '5px',
+                            marginBottom: '20px',
+                            justifyContent: 'center'
+                        }}
+                    >
+                        {matrixValues.map((row, rowIndex) =>
+                            row.map((value, colIndex) => (
+                                <input
+                                    key={`${rowIndex}-${colIndex}`}
+                                    type="text"
+                                    value={value}
+                                    placeholder={
+                                        focusedCell?.row === rowIndex &&
+                                        focusedCell?.col === colIndex
+                                            ? ''
+                                            : '0'
                                     }
-                                }}
-                                onChange={(e) =>
-                                    handleCellChange(rowIndex, colIndex, e.target.value)
-                                }
-                                style={{
-                                    width: '60px',
-                                    height: '40px',
-                                    textAlign: 'center',
-                                    fontSize: '14px',
-                                    border: '1px solid #ccc',
-                                    borderRadius: '4px'
-                                }}
-                            />
-                        ))
-                    )}
+                                    onFocus={() =>
+                                        setFocusedCell({ row: rowIndex, col: colIndex })
+                                    }
+                                    onBlur={() => {
+                                        setFocusedCell(null);
+                                        if (matrixValues[rowIndex][colIndex].trim() === '') {
+                                            handleCellChange(rowIndex, colIndex, '');
+                                        }
+                                    }}
+                                    onChange={(e) =>
+                                        handleCellChange(rowIndex, colIndex, e.target.value)
+                                    }
+                                    style={{
+                                        width: '60px',
+                                        height: '40px',
+                                        textAlign: 'center',
+                                        fontSize: '14px',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '4px'
+                                    }}
+                                />
+                            ))
+                        )}
+                    </div>
                 </div>
 
                 {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
